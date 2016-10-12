@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="d3.v3.min.js"></script>
+    <script src="d3.parcoords.js"></script>
+    <script src="divgrid.js"></script>
+    <script src="sylvester.js"></script>
+    <link rel="stylesheet" type="text/css" href="d3.parcoords.css">
+    <link rel="stylesheet" type="text/css" href="scorecard.css">
+    <meta charset="UTF-8">
+    <title>College Scorecard</title>
+</head>
+<body>
+
+<div class="grid">
+    <h1>College Scorecard</h1>
+    <p>Analyze multiple college variables at once using parallel coordinates. Every axis is
+    filterable and re-orderable. Mouseover rows in the data table to highlight the line for that college.
+        Minimum of 1080p resolution recommended.
+</p>
+</div>
+<br>
+<div id="parcoords" class="parcoords" style="height:800px;"></div>
+<div id="grid" class="grid"></div>
+</body>
+</html>
+
+<script>
+
+    var zcolorscale = d3.scale.linear()
+            .domain([28, 50])
+            .range(["#00A896", "#05668D"])
+            .interpolate(d3.interpolateLab);
+
+    var color = function(d) { return zcolorscale(d['Latitude']); };
+
+    var parcoords = d3.parcoords()("#parcoords")
+            .color(color)
+            .alpha(0.3);
+
+    d3.csv('filtered-csv.csv', function (data) {
+        parcoords.data(data)
+                .mode("queue")
+                .bundlingStrength(0.25) // set bundling strength
+                .smoothness(0.15)
+                .bundleDimension("ACT Median")
+                .showControlPoints(false)
+                .hideAxis(["Name", "City", "Zipcode", "Admission Rate"])
+                .render()
+                .brushMode("1D-axes")
+                .reorderable();;
+
+        var grid = d3.divgrid();
+        d3.select("#grid")
+                .datum(data.slice(0, 50))
+                .call(grid)
+                .selectAll(".row")
+                .on({
+                    "mouseover": function (d) {
+                        parcoords.highlight([d])
+                    },
+                    "mouseout": parcoords.unhighlight
+                });
+
+        parcoords.on("brush", function (d) {
+            d3.select("#grid")
+                    .datum(d.slice(0, 50))
+                    .call(grid)
+                    .selectAll(".row")
+                    .on({
+                        "mouseover": function (d) {
+                            parcoords.highlight([d])
+                        },
+                        "mouseout": parcoords.unhighlight
+                    });
+        });
+    });
+</script>

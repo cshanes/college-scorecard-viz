@@ -1,0 +1,91 @@
+/* data table styles */
+#grid {
+    height: 200px;
+
+}
+
+.grid {
+    margin-left: 75px;
+    /*margin-right: 500px;*/
+    margin-top: 30px;
+}
+
+.center {
+    margin: auto;
+}
+
+body {
+    font-family: Arial;
+}
+
+.row, .header {
+    clear: left;
+    font-size: 13px;
+    line-height: 24px;
+    height: 28px;
+    overflow: visible;
+}
+
+.row:nth-child(odd) {
+    background-color: rgba(0, 134, 255, 0.16);
+}
+
+.header {
+    font-weight: bold;
+    border-bottom: 1px solid #000000;
+}
+
+.cell {
+    float: left;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 130px;
+    height: 18px;
+}
+
+.col-0 { /* name */
+    width: 220px;
+}
+
+.col-2 {  /* state */
+    width: 80px;
+}
+
+.col-4 {  /* latitude */
+    width: 80px;
+    text-align: right;
+}
+
+.col-5 {  /* longitude */
+    width: 80px;
+    text-align: right;
+}
+
+.col-6 {  /* admission rate */
+    /*width: 80px;*/
+    text-align: right;
+}
+
+.col-7 {  /* SAT */
+    width: 140px;
+    text-align: right;
+}
+
+.col-8 {  /* ACT */
+    width: 140px;
+    text-align: right;
+}
+
+.col-9 {  /* UG population */
+    width: 160px;
+    text-align: right;
+}
+
+.col-10 {  /* IS tuition */
+    text-align: right;
+}
+
+.col-11 {  /* OS tuition */
+    width: 140px;
+    text-align: right;
+}
